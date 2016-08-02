@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Gotta Catch'em All</title>
+        <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+        <script>
+            $(document).ready(function(){
+            for (var i = 1; i <= 151; i++) {
+                url = "<img id='"+ i +"'  src= 'http://pokeapi.co/media/img/" + i + ".png'>"
+                $('.all_pokemon').append(url)
+                
+            };
+                $(document).on('click', 'img', function(){
+                    $('.pokedex').html("<img src='http://pokeapi.co/media/img/"+this.id+".png'><br>")
+                    $.get("http://pokeapi.co/api/v1/pokemon/"+this.id+ "/", function(res){
+                        $('.pokedex').append("<h3>"+ res.name + "</h3>");
+                        $('.pokedex').append("<h4>Types</h4>");
+                            for(var j =0 ; j < res.types.length; j++){
+                                $('.pokedex').append("<li>" + res.types[j].name+"</li>");
+
+                            };
+                        $(".pokedex").append("<h4>Height</h4>" + res.height+"</p>");
+                        $(".pokedex").append("<h4>Weight</h4>" + res.weight+"</p>");
+                        }, "json");
+                });
+            })
+
+
+
+
+            
+
+        </script>
+        <style type="text/css">
+            .all_pokemon{
+                width: 70%;
+            }
+            .pokedex{
+                border: 10px solid red;
+                width: 15%;
+                height: 500px;
+                padding: 20px;
+                position: fixed;
+                top: 10%;
+                text-align: center;
+               
+            }
+            .all_pokemon, .pokedex{
+                display: inline-block;
+            }
+        </style>
+    </head>
+    <body>
+        <div class = "wrapper">
+            <div class = "all_pokemon"> </div>
+            <div class="pokedex">  </div>
+        </div>
+    </body>
+</html>
